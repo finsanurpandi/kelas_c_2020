@@ -19,7 +19,7 @@ class CreateStudentsTable extends Migration
             $table->string('nama', 50);
             $table->char('kelas', 2);
             $table->text('address');
-            $table->char('nidn', 10)->after('address');
+            $table->char('nidn', 10);
             $table->timestamps();
             
             $table->index('nidn');
