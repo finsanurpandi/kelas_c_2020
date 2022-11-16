@@ -9,8 +9,10 @@ class Lecture extends Model
 {
     use HasFactory;
 
-    protected $table = 'dosen';
+    // protected $table = 'dosen';
     protected $primaryKey = 'nidn';
+
+
 
     
 }
