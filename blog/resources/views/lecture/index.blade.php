@@ -13,13 +13,18 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    <a href="lecture/create" class="btn btn-primary">Tambah Data</a>
+                    <hr/>
+                    @if($lectures->isEmpty())
+                        Tidak terdapat data
+                    @else
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>NO</th>
                                 <th>NIDN</th>
                                 <th>NAMA</th>
+                                <th>STATUS</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,11 +33,19 @@
                                 <tr>
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $lecture->nidn }}</td>
-                                    <td>{{ $lecture->nama }}</td>    
+                                    <td>{{ $lecture->nama }}</td> 
+                                    <td>
+                                        @if($lecture->status == 1)
+                                            <span class="badge text-bg-success">Aktif</span>
+                                        @else
+                                            <span class="badge text-bg-danger">Tidak Aktif</span>
+                                        @endif
+                                    </td>    
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    @endif
                 </div>
             </div>
         </div>

@@ -25,6 +25,8 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'lecture.'
     ], function(){
         Route::get('/', [LectureController::class, 'index'])->name('index');
+        Route::get('/create', [LectureController::class, 'create'])->name('create');
+        Route::post('/store', [LectureController::class, 'store'])->name('store');
     });
 
     Route::group([

@@ -12,6 +12,8 @@ class Lecture extends Model
     // protected $table = 'dosen';
     protected $primaryKey = 'nidn';
 
+    protected $fillable = ['nidn', 'nama', 'status'];
+
 
 
     
