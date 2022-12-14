@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lecture;
+use App\Models\Department;
+use App\Models\Student;
 use App\Http\Requests\StoreLectureRequest;
 use Session;
 
@@ -11,14 +13,18 @@ class LectureController extends Controller
 {
     public function index()
     {
-        $data['lectures'] = Lecture::all();
+        // $data['lectures'] = Lecture::all();
+        $data['lectures'] = Lecture::with('departments')->get();
+        $data['students'] = Department::find(1)->students;
+        $data['department'] = Student::with('departments')->where('id', 2)->first();
 
         return view('lecture.index')->with($data);
     }
 
     public function create()
     {
-        return view('lecture.create');
+        $data['department'] = Department::pluck('name', 'id');
+        return view('lecture.create')->with($data);
     }
 
     public function store(StoreLectureRequest $request)
@@ -37,6 +43,7 @@ class LectureController extends Controller
     public function edit($id)
     {
         $data['lecture'] = Lecture::find($id);
+        $data['department'] = Department::pluck('name', 'id');
         return view('lecture.edit')->with($data);
     }
 
@@ -94,5 +101,13 @@ class LectureController extends Controller
         Session::flash('status', 'Semua data berhasil dihilangkan!!!');   
         
         return redirect()->back();
+    }
+
+    // relationship
+    public function student($id)
+    {
+        //$data['students'] = Lecture::find($id)->students;
+        $data['students'] = Lecture::find($id)->students()->orderBy('nama', 'asc')->get();
+        return view('lecture.student')->with($data);
     }
 }

@@ -10,6 +10,13 @@
                 <div class="card-body">
                     <a href="lecture/create" class="btn btn-primary">TAMBAH DATA</a>
                     <hr/>
+                    @foreach($department->departments as $depart)
+                        @php
+                            $data = json_decode($depart, true)
+                        @endphp
+                        <li>{{ $data['name'] }} </li>
+                    @endforeach
+                    {{ $department->departments}}
                     @if($lectures->isEmpty())
                         Tidak ada ada.
                     @else
@@ -20,6 +27,7 @@
                                 <th>NIDN</th>
                                 <th>NAMA</th>
                                 <th>STATUS</th>
+                                <th>PRODI</th>
                                 <th>AKSI</th>
                             </tr>
                         </thead>
@@ -37,7 +45,9 @@
                                         <span class="badge text-bg-danger">TIDAK AKTIF</span>
                                     @endif
                                 </td>
+                                <td>{{ $lecture->departments->name }}</td>
                                 <td>
+                                    <a href="/lecture/{{ $lecture->nidn }}/student" class="btn btn-warning btn-sm">STUDENT</a>
                                     <a href="/lecture/{{ $lecture->nidn }}/edit" class="btn btn-success btn-sm">EDIT</a>
                                     {!! Form::open(['url' => 'lecture/'.$lecture->nidn, 'method' => 'DELETE']) !!}
                                         {{ Form::button('HAPUS', ['class' => 'btn btn-danger btn-sm', 'onclick' => "deleteConfirmation('".$lecture->nama."')"]) }}
