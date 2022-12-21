@@ -9,6 +9,10 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\LoginNotification;
+use App\Models\User;
+
 class LoginController extends Controller
 {
     /*
@@ -50,7 +54,14 @@ class LoginController extends Controller
     {
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'status' => 1])) {
             $request->session()->regenerate();
- 
+            
+            $user = User::where('username', $request->username)->first();
+
+            if($user->role_id == 2){
+                $lectures = User::where('role_id', 1)->get();
+                Notification::send($lectures, new LoginNotification($user));
+            }
+
             return redirect()->intended('home');
         }
  

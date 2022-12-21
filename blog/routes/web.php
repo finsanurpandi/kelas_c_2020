@@ -39,6 +39,8 @@ Route::group(['middleware' => 'auth'], function() {
 
         // RE=elationship
         Route::get('/{id}/student', [LectureController::class, 'student'])->name('student');
+
+        Route::post('/markAsRead', [LectureController::class, 'markAsRead']);
     });
 
     Route::group([
@@ -47,5 +49,7 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'student.'
     ], function(){
         Route::get('/', [StudentController::class, 'index'])->name('index');
+
+        Route::get('/email', [StudentController::class, 'email']);
     });
 });

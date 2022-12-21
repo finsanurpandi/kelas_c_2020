@@ -8,15 +8,24 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
+                   
+
                     <a href="lecture/create" class="btn btn-primary">TAMBAH DATA</a>
                     <hr/>
-                    @foreach($department->departments as $depart)
+                    @foreach ($user->unreadNotifications as $notification)
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            Hi, user dengan email <strong>{{$notification->data['email']}}</strong> sudah berhasil login.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="markAsRead('{{$notification->id}}')"></button>
+                          </div>
+                        {{-- {{$notification->markAsRead()}} --}}
+                    @endforeach
+                    {{-- @foreach($department->departments as $depart)
                         @php
                             $data = json_decode($depart, true)
                         @endphp
                         <li>{{ $data['name'] }} </li>
                     @endforeach
-                    {{ $department->departments}}
+                    {{ $department->departments}} --}}
                     @if($lectures->isEmpty())
                         Tidak ada ada.
                     @else
